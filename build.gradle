@@ -20,4 +20,8 @@ task publishBintray (type: org._10ne.gradle.rest.RestTask, dependsOn: bintrayUpl
 }
 
 dependencies {
+	apiCompile 'io.core9:core-api:+'
+	apiCompile 'io.core9:module-widgets-api:+'
+	implCompile 'io.core9:module-database-mongodb-api:+'
+	implCompile 'org.jsoup:jsoup:1.7.3'
 }

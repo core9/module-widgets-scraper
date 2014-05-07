@@ -1,0 +1,45 @@
+package nl.trimm.widgets.scraper;
+
+import io.core9.plugin.server.request.Request;
+import io.core9.plugin.widgets.datahandler.DataHandlerDefaultConfig;
+import io.core9.plugin.widgets.datahandler.DataHandlerFactoryConfig;
+import io.core9.plugin.widgets.datahandler.DataHandlerGlobalString;
+
+public class ScraperConfig extends DataHandlerDefaultConfig implements DataHandlerFactoryConfig {
+
+	private String source;
+	private DataHandlerGlobalString path;
+	private String query;
+
+	public String getSource() {
+		return source;
+	}
+
+	public void setSource(String source) {
+		this.source = source;
+	}
+
+	public DataHandlerGlobalString getPath() {
+		return path;
+	}
+
+	public void setPath(DataHandlerGlobalString path) {
+		this.path = path;
+	}
+	
+	public String getPath(Request req) {
+		if(path.isGlobal()) {
+			return req.getContext(this.getComponentName() + ".path", path.getValue());
+		}
+		return path.getValue();
+	}
+
+	public String getQuery() {
+		return query;
+	}
+
+	public void setQuery(String query) {
+		this.query = query;
+	}
+
+}

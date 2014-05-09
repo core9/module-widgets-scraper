@@ -5,11 +5,13 @@ import io.core9.plugin.widgets.datahandler.DataHandlerDefaultConfig;
 import io.core9.plugin.widgets.datahandler.DataHandlerFactoryConfig;
 import io.core9.plugin.widgets.datahandler.DataHandlerGlobalString;
 
+import java.util.List;
+
 public class ScraperConfig extends DataHandlerDefaultConfig implements DataHandlerFactoryConfig {
 
 	private String source;
 	private DataHandlerGlobalString path;
-	private String query;
+	private List<QueryItem> queryItems;
 
 	public String getSource() {
 		return source;
@@ -33,13 +35,12 @@ public class ScraperConfig extends DataHandlerDefaultConfig implements DataHandl
 		}
 		return path.getValue();
 	}
-
-	public String getQuery() {
-		return query;
+	
+	public List<QueryItem> getQueryItems() {
+		return this.queryItems;
 	}
 
-	public void setQuery(String query) {
-		this.query = query;
+	public void setQueryItems(List<QueryItem> items) {
+		this.queryItems = items;
 	}
-
 }

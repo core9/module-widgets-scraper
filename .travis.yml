@@ -1,8 +1,8 @@
 language: java
 env:
   global:
-    - TERM=dumb
-    - secure: BINTRAY_USER
-    - secure: BINTRAY_KEY
-install: 
-  - "./gradlew clean test build publish publishBintray"
+  - TERM=dumb
+  - secure: ZoDGgVrJ9LqHMZrH+yd0T6f4oMNQcxL5NFqpK50WoCjqaz7cUn0LIO4z3O0DHrzh3b2YLof0kL+xPPCuxbXPQ1bKwaUAKCHoNaY8QJq7QE+gaghECMOMDzaSnqUSrlHHqsNz/gJ2/7Ipnd5kPH+MuxuhNlS1li9e7nt8bSY3BVs=
+  - secure: V1QpmgKVKFgSGKSQjoCANR6M09UGaU6D6ESdmcqzjtH12lnGbqwuN3NoHS/iyDPDvE8fx9g3n/ZmofWXrRdR8BNhAglzqHFd2IY43MgINY/yVPRZ3nWUgOzC5S0vpn+fIPIC2+e+Bh8qhVvnwNIuWIjG2vTYOQ32aOxJKw283SY=
+install:
+- ./gradlew clean test build publish publishBintray

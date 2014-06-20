@@ -69,6 +69,7 @@ public class ScraperDataHandlerImpl implements ScraperDataHandler {
 					    return new HashMap<String,Object>();
 					} else {
 						if(req.getMethod() == Method.POST) {
+							//TODO Handle post
 							return getResult(req.getVirtualHost(), config, path, pmPath);
 						} else {
 							return getResult(req.getVirtualHost(), config, path, pmPath);
@@ -91,6 +92,7 @@ public class ScraperDataHandlerImpl implements ScraperDataHandler {
 	
 	/**
 	 * Retrieve the page contents
+	 * TODO Expire cached items
 	 * @param vhost
 	 * @param config
 	 * @param path
@@ -118,6 +120,7 @@ public class ScraperDataHandlerImpl implements ScraperDataHandler {
 	
 	/**
 	 * Retrieve static files
+	 * TODO Expire cached files
 	 * @param vhost
 	 * @param source
 	 * @param path

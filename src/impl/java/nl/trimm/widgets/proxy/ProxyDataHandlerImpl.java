@@ -62,11 +62,11 @@ public class ProxyDataHandlerImpl implements ProxyDataHandler {
 			}
 		};
 	}
-	
+
 	/**
 	 * Run a get request, return the result
 	 * @return
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 	private String doGet(ProxyConfig config, Request req) throws IOException {
 		String path = req.getPath().replaceFirst(config.getPath(req), "");
@@ -80,7 +80,7 @@ public class ProxyDataHandlerImpl implements ProxyDataHandler {
 		}
 		return sb.toString();
 	}
-	
+
 	/**
 	 * Do a request, specified by the method, return the result
 	 * @param config
@@ -95,20 +95,20 @@ public class ProxyDataHandlerImpl implements ProxyDataHandler {
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 		connection.setDoOutput(true);
 		connection.setDoInput(true);
-		connection.setInstanceFollowRedirects(false); 
+		connection.setInstanceFollowRedirects(false);
 		connection.setRequestMethod(method);
 		// TODO: Remove application/json, get from Request Headers
-		connection.setRequestProperty("Content-Type", "application/json"); 
+		connection.setRequestProperty("Content-Type", "application/json");
 		connection.setRequestProperty("charset", "utf-8");
 		connection.setUseCaches (false);
 		if(req.getBody() != null) {
-			connection.setRequestProperty("Content-Length", "" + Integer.toString(req.getBody().getBytes().length));
+			connection.setRequestProperty("Content-Length", "" + Integer.toString(req.getBody().toBlocking().last().getBytes().length));
 			DataOutputStream wr = new DataOutputStream(connection.getOutputStream ());
-			wr.writeBytes(req.getBody());
+			wr.writeBytes(req.getBody().toBlocking().last());
 			wr.flush();
 			wr.close();
 		}
-				
+
 		BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 		String output = "";
 		String inputLine;
@@ -118,7 +118,7 @@ public class ProxyDataHandlerImpl implements ProxyDataHandler {
 		connection.disconnect();
 		return output;
 	}
-	
+
 	private String parseParams(Request req) {
 		String params = "";
 		for(Map.Entry<String, Object> entry : req.getParams().entrySet()) {

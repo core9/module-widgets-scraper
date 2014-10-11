@@ -3,18 +3,18 @@ package nl.trimm.widgets.proxy;
 import io.core9.plugin.server.request.Request;
 import io.core9.plugin.widgets.datahandler.DataHandlerDefaultConfig;
 import io.core9.plugin.widgets.datahandler.DataHandlerFactoryConfig;
-import io.core9.plugin.widgets.datahandler.DataHandlerGlobalString;
+import io.core9.plugin.widgets.datahandler.DataHandlerGlobal;
 
 public class ProxyConfig extends DataHandlerDefaultConfig implements DataHandlerFactoryConfig {
-	
-	private DataHandlerGlobalString path;
-	private DataHandlerGlobalString source;
+
+	private DataHandlerGlobal<String> path;
+	private DataHandlerGlobal<String>  source;
 
 
-	public DataHandlerGlobalString getPath() {
+	public DataHandlerGlobal<String>  getPath() {
 		return path;
 	}
-	
+
 	public String getPath(Request req) {
 		if(path.isGlobal()) {
 			return req.getContext(this.getComponentName() + ".path", path.getValue());
@@ -22,14 +22,14 @@ public class ProxyConfig extends DataHandlerDefaultConfig implements DataHandler
 		return path.getValue();
 	}
 
-	public void setPath(DataHandlerGlobalString path) {
+	public void setPath(DataHandlerGlobal<String>  path) {
 		this.path = path;
 	}
 
-	public DataHandlerGlobalString getSource() {
+	public DataHandlerGlobal<String>  getSource() {
 		return source;
 	}
-	
+
 	public String getSource(Request req) {
 		if(source.isGlobal()) {
 			return req.getContext(this.getComponentName() + ".source", source.getValue());
@@ -37,7 +37,7 @@ public class ProxyConfig extends DataHandlerDefaultConfig implements DataHandler
 		return source.getValue();
 	}
 
-	public void setSource(DataHandlerGlobalString source) {
+	public void setSource(DataHandlerGlobal<String> source) {
 		this.source = source;
 	}
 

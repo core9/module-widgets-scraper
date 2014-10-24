@@ -27,19 +27,19 @@ import org.jsoup.select.Elements;
 
 @PluginImplementation
 public class ScraperDataHandlerImpl implements ScraperDataHandler {
-	
+
 	@InjectPlugin
 	private MongoDatabase mongo;
-	
+
 	private CrudRepository<CacheEntity> cache;
-	
+
 	@PluginLoaded
 	public void onDatabaseLoaded(RepositoryFactory factory) throws NoCollectionNamePresentException {
 		cache = factory.getRepository(CacheEntity.class);
 	}
-	
+
 	private final String[] ALLOWED_BINARIES = new String[]{
-		"js", "css", "jpg", "png", "gif", "less", "sass", 
+		"js", "css", "jpg", "png", "gif", "less", "sass",
 		"svg", "pdf", "woff", "ico", "jpeg"
 	};
 	private final String STATIC_COLLECTION = "static.cache";
@@ -88,7 +88,7 @@ public class ScraperDataHandlerImpl implements ScraperDataHandler {
 			}
 		};
 	}
-	
+
 	/**
 	 * Retrieve the page contents
 	 * @param vhost
@@ -108,14 +108,15 @@ public class ScraperDataHandlerImpl implements ScraperDataHandler {
 			Map<String,Object> result = new HashMap<String,Object>();
 			for(QueryItem item : config.getQueryItems()) {
 				Elements query = doc.select(item.getCssSelector());
-				result.put(item.getParam(), query.outerHtml().replace(config.getSource(), pmPath));
+				result.put(item.getParam(), query.html().replace(config.getSource(), pmPath));
+				result.put(item.getParam() + "-outerHTML", query.outerHtml().replace(config.getSource(), pmPath));
 			}
 			cached.setContents(result);
 			cache.create(vhost, cached);
 		}
 		return cached.getContents();
 	}
-	
+
 	/**
 	 * Retrieve static files
 	 * @param vhost
@@ -136,7 +137,7 @@ public class ScraperDataHandlerImpl implements ScraperDataHandler {
 			int separator = path.lastIndexOf('/');
 			Map<String,Object> metadata = new HashMap<String,Object>();
 			metadata.put("folder", "/" + path.substring(0,separator));
-			
+
 			Map<String,Object> file = new HashMap<String,Object>();
 			file.put("filename", "/" + path);
 			file.put("_id", fileId);
@@ -146,7 +147,7 @@ public class ScraperDataHandlerImpl implements ScraperDataHandler {
 			return result;
 		}
 	}
-	
+
 	private String getHashCode(String... sources) {
 		String result = "";
 		for(String part : sources) {
@@ -154,7 +155,7 @@ public class ScraperDataHandlerImpl implements ScraperDataHandler {
 		}
 		return result;
 	}
-	
+
 	private static boolean endsWithAny(final String string, final String... array) {
 		for(String item : array) {
 			if(string.endsWith(item)) {

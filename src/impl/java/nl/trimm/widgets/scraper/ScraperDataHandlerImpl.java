@@ -109,7 +109,7 @@ public class ScraperDataHandlerImpl implements ScraperDataHandler {
 			for(QueryItem item : config.getQueryItems()) {
 				Elements query = doc.select(item.getCssSelector());
 				result.put(item.getParam(), query.html().replace(config.getSource(), pmPath));
-				result.put(item.getParam() + "-outerHTML", query.outerHtml().replace(config.getSource(), pmPath));
+				result.put(item.getParam() + "outerHTML", query.outerHtml().replace(config.getSource(), pmPath));
 			}
 			cached.setContents(result);
 			cache.create(vhost, cached);

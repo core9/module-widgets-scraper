@@ -12,6 +12,7 @@ public class ScraperConfig extends DataHandlerDefaultConfig implements DataHandl
 	private String source;
 	private DataHandlerGlobal<String>  path;
 	private List<QueryItem> queryItems;
+	private List<ReplaceItem> replaceItems;
 
 	public String getSource() {
 		return source;
@@ -42,5 +43,13 @@ public class ScraperConfig extends DataHandlerDefaultConfig implements DataHandl
 
 	public void setQueryItems(List<QueryItem> items) {
 		this.queryItems = items;
+	}
+
+	public List<ReplaceItem> getReplaceItems() {
+		return this.replaceItems;
+	}
+
+	public void setReplaceItems(List<ReplaceItem> items) {
+		this.replaceItems = items;
 	}
 }

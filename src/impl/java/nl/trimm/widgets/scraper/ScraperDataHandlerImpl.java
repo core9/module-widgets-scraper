@@ -23,6 +23,7 @@ import net.xeoh.plugins.base.annotations.injections.InjectPlugin;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 @PluginImplementation
@@ -105,6 +106,18 @@ public class ScraperDataHandlerImpl implements ScraperDataHandler {
 			cached = new CacheEntity();
 			cached.setId(hash);
 			Document doc = Jsoup.connect(config.getSource() + path).get();
+
+			for(ReplaceItem item : config.getReplaceItems()) {
+				Elements query = doc.select(item.getCssSelector());
+				for(Element element : query){
+					String attribute = element.attr(item.getElementAttribute());
+					String pattern = removeQuotes(item.getRegex().split(",")[0]);
+					String replacePattern = removeQuotes(item.getRegex().split(",")[1]);
+					element.attr(item.getElementAttribute(), attribute.replaceAll(pattern , replacePattern ) );
+				}
+			}
+
+
 			Map<String,Object> result = new HashMap<String,Object>();
 			for(QueryItem item : config.getQueryItems()) {
 				Elements query = doc.select(item.getCssSelector());
@@ -115,6 +128,12 @@ public class ScraperDataHandlerImpl implements ScraperDataHandler {
 			cache.create(vhost, cached);
 		}
 		return cached.getContents();
+	}
+
+	private String removeQuotes(String string) {
+		String str = string.trim();
+		if(str.equals("\"\""))return "";
+		return str.substring(1, str.length()-1);
 	}
 
 	/**

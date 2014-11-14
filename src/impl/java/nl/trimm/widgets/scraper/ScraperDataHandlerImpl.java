@@ -102,7 +102,7 @@ public class ScraperDataHandlerImpl implements ScraperDataHandler {
 	 * @throws IOException
 	 */
 	private Map<String,Object> getResult(VirtualHost vhost, ScraperConfig config, String path, String pmPath) throws IOException {
-		String hash = getHashCode(config.getSource(), path, config.getQueryItems().toString(), config.getReplaceItems().toString(), config.getComponentName());
+		String hash = getHashCode(config.getSource(), path, config.getComponentName());
 		CacheEntity cached = cache.read(vhost, hash);
 		if(cached == null) {
 			cached = new CacheEntity();
